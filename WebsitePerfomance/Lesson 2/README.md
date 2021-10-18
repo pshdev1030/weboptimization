@@ -21,7 +21,7 @@
 4. HTML 마크업 간의 관계를 정의하기 떄문에 생성된 객체는 트리 데이터 구조 내에 연결됩니다.(노드가 됩니다.) 이는 상하위 관계도 포함합니다. 즉 HTML객체는 body의 상위이고, body는 paragraph 객체의 상위인 식입니다.
    <img src="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/images/dom-tree.png">
 
--이러한 구조로 부분 HTML을 먼저 로드하여 성능개선을 할 수 있다.
+이러한 구조로 부분 HTML을 먼저 로드하여 성능개선을 할 수 있다.
 
 ## Converting CSS to the CSSOM
 
@@ -49,5 +49,21 @@ div p {
 ## The Render Tree
 
 - DOM 과 CSSOM트리를 합친 트리이다.
-- 눈에 보이는 내용만 포함한 트리이다. `display:none`과 같은 style이 있는 노드의 경우 포함되지 않는다.
-  <img src="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/images/render-tree-construction.png">
+- 눈에 보이는 내용만 포함한 트리이다.
+  - `display:none`과 같은 style이 있는 노드의 경우 포함되지 않는다.
+  - html태그는 눈에 보이는 내용이 없으므로 제거한다.
+    <img src="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/images/render-tree-construction.png">
+
+## Layout
+
+- width
+  - `%`의 경우 메타태그에서 설정한 뷰포트의 너비 or 부모의 너비를 상속한다.
+  - 아래의 태그의 경우 뷰포트 너비를 디바이스의 너비로 설정한다. 기본값은 980px이다.
+  ```HTML
+  <meta name="viewport" content="width=device-width">
+  ```
+- 스타일이나 내용을 변경하여 렌더트리를 업데이트 할 경우 레이아웃 단계를 다시 실행할 가능성이 크다.
+- 뷰포트 너비가 변하면 브라우저는 레이아웃 단계를 다시 시행해야 한다.
+  (폰을 돌리거나 브라우저 크기를 조정할 떄 일어난다.)
+
+-
