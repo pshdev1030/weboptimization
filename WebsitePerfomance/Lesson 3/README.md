@@ -82,3 +82,21 @@ body {
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="style-print.css" media="print">
 ```
+
+## JavaScript and CRP
+
+https://developers.google.com/web/fundamentals/performance/critical-rendering-path/adding-interactivity-with-javascript#parser-blocking-vs-asynchronous-javascript
+
+- JS 는 DOM과 CSSOM 모두 조작 가능
+- script 태그를 만났을 때는 DOM 생성을 중단하고 자바스크립트가 실행되기를 기다려야한다
+- script 태그가 DOM 생성을 막기 때문에 js는 parser blocking이다.
+- 인라인 스크립트 대신 외부파일로 스크립트를 사용할 경우엔 파서가 script 태그를 발견하면 파일을 받아서 실행한다. 파일을 가져오는 동안에 DOM 생성을 계속할 수 없으므로 CRP가 늦어진다.
+- 인라인 스크립트를 사용하는 것은 요청을 줄이는 데에 도움을 주지만 코드가 반복되고 과도하게 사용될 수 있는 단점이 있다.
+- js는 CSS를 조작할 가능성도 있기 때문에 script는 css가 도착하고 CSSOM을 생성할 때 까지 실행되지 않는다.(CSSOM 생성 후 JS가 실행된다.) 따라서 js 최적화는 css최적화와 깊은 연관이 있다.
+- 사용자 분석 등 랜더링에 영향을 주지 않는 스크립트
+  - 랜더링이 끝나고 브라우저가 onload 이벤트를 발생 시켰을 때 실행하여 최적화 할 수 있다.
+  - script 태그에 `async 속성(CRP를 막지 않는 script)`을 통해 최적화 할 수 있다. async 속성을 붙일경우 브라우저의 DOM 생성을 막지 않는다. script 요청을 처리하고 dom을 파싱한다. 또한 CSSOM에 영향을 받지 않는다. CSSOM생성 전에 script를 사용 가능하다면 바로 실행할 수 있다.
+  ```HTML
+  <script src="analytics.js" async></script>
+  ```
+  - 자바스크립트를 css위에 넣어서 css에 방해받지 않고 실행할 수 있다.
