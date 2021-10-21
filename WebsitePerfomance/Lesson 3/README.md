@@ -105,9 +105,14 @@ https://developers.google.com/web/fundamentals/performance/critical-rendering-pa
 
   - 자바스크립트를 css위에 넣어서 css에 방해받지 않고 실행할 수 있다.
 
-  ## 요약
+## 요약
 
-  - 데이터통신의 양을 줄임
-  - 중요한 리소스의 개수를 줄임
-  - CRP의 길이를 줄인다
-    - 서버와 클라이언트를 왕복하는 수
+- 데이터통신의 양을 줄임
+- 중요한 리소스의 개수를 줄임
+- CRP의 길이를 줄인다
+  - 서버와 클라이언트를 왕복하는 수
+
+## Preload Scanner
+
+- 문서의 앞부분에서 CSS나 js를 알아내려 한다.
+- 파서가 막힌동안 js나 css를 다운로드받는다.(병렬 요청)
